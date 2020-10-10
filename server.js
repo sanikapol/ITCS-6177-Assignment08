@@ -125,7 +125,7 @@ app.get(('/companies'),cache(120),async (req,res) => {
 
 /**
  * @swagger
- * /student:
+ * /students:
  *    get:
  *      description: Returns all the records from the Student table
  *      produces:
