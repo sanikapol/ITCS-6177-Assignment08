@@ -275,7 +275,7 @@ app.post(('/companies'),async (req,res) => {
 
  /**
  * @swagger
- * /companies:
+ * /companies/{id}:
  *    patch:
  *      description: Update a record from company table
  *      produces:
@@ -286,6 +286,10 @@ app.post(('/companies'),async (req,res) => {
  *          404:
  *              description: No record for given ItemId
  *      parameters:
+ *          - name: id
+ *            in: path
+ *            required: true
+ *            type: string
  *          - name: Company
  *            description: company object
  *            in: body
@@ -363,7 +367,7 @@ app.put(('/companies/:COMPANY_ID'),async (req,res) => {
     try{
         conn = await pool.getConnection();
         console.log(req.body)
-        var query = `UPDATE company SET COMPANY_CITY = '${req.body.COMPANY_CITY}' WHERE COMPANY_ID = '${req.params.COMPANY_ID}'`;
+	var query = `UPDATE company SET COMPANY_CITY = '${req.body.COMPANY_CITY}',COMPANY_NAME='${req.body.COMPANY_NAME}' WHERE COMPANY_ID = '${req.params.COMPANY_ID}'`;
         var rows = await conn.query(query);
         //console.log(rows.affectedRows)
         if(rows.affectedRows == 0){
