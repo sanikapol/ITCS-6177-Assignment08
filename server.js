@@ -34,7 +34,7 @@ const options = {
 
 const specs = swaggerJsdoc(options);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(specs));
-
+app.use(cors());
 
 var mcache = require('memory-cache');
 
@@ -196,7 +196,7 @@ app.use(bodyParser.json())
  *            in: body
  *            required: true
  *            schema:
- *              $ref: '#/definitions/agent'
+ *              $ref: '#/definitions/Agents'
  *
  */
 app.post(('/agents'),async (req,res) => {
@@ -246,7 +246,7 @@ app.post(('/agents'),async (req,res) => {
  *            in: body
  *            required: true
  *            schema:
- *              $ref: '#/definitions/company'
+ *              $ref: '#/definitions/Company'
  *
  */
 app.post(('/companies'),async (req,res) => {
@@ -272,6 +272,28 @@ app.post(('/companies'),async (req,res) => {
 })
 
 
+
+ /**
+ * @swagger
+ * /companies:
+ *    patch:
+ *      description: Update a record from company table
+ *      produces:
+ *          - application/json
+ *      responses:
+ *          200:
+ *              description: Updated data from companytable
+ *          404:
+ *              description: No record for given ItemId
+ *      parameters:
+ *          - name: Company
+ *            description: company object
+ *            in: body
+ *            required: true
+ *            schema:
+ *              $ref: '#/definitions/Company'
+ *
+ */
 app.patch('/companies/:id',
     async (req,res)=>{
     let conn;
@@ -313,6 +335,29 @@ finally{
 
 
 
+/**
+ * @swagger
+ * /companies/{id}:
+ *    put:
+ *      description: Add or Update a record from companies table
+ *      produces:
+ *          - application/json
+ *      responses:
+ *          200:
+ *              description: Added or Updated data to company table
+ *      parameters:
+ *          - name: id
+ *            in: path
+ *            required: true
+ *            type: string
+ *          - name: Company
+ *            description: company object
+ *            in: body
+ *            required: true
+ *            schema:
+ *              $ref: '#/definitions/Company'
+ *
+ */
 app.put(('/companies/:COMPANY_ID'),async (req,res) => {
     let conn;
     try{
@@ -338,6 +383,24 @@ app.put(('/companies/:COMPANY_ID'),async (req,res) => {
 
 })
 
+
+/**
+ * @swagger
+ * /companies/{id}:
+ *    delete:
+ *      description: Delete the record in the company table
+ *      produces:
+ *          - application/json
+ *      responses:
+ *          200:
+ *              description: Successfully deleted record from table
+ *      parameters:
+ *          - name: id
+ *            in: path
+ *            required: true
+ *            type: string
+ *
+ */
 app.delete(('/companies/:COMPANY_ID'),async (req,res) => {
     let conn;
     try{
